@@ -1,0 +1,12 @@
+{
+  "name": "Contador de Truco",
+  "short_name": "Truco",
+  "description": "Contador de puntos para partidas de Truco",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#111111",
+  "theme_color": "#111111",
+  "orientation": "landscape",
+  "lang": "es",
+  "icons": []
+}
