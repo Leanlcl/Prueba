@@ -5,63 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#111111">
 <meta name="description" content="Contador de Truco">
+<link rel="manifest" href="./manifest.json">
 <title>Truco - Contador</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{width:100%;height:100%;background:#111;color:#fff;font-family:Arial,sans-serif;overflow:hidden}
-body{overscroll-behavior:none}
-.app{height:100dvh;display:flex;position:relative}
-.equipo{width:50%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;user-select:none;-webkit-user-select:none;touch-action:manipulation;cursor:pointer}
-.nosotros{border-right:1px solid #444}
-.nombre{font-size:20px;font-weight:bold;letter-spacing:3px;margin-bottom:40px}
-.marcador{width:90%;max-width:400px;min-height:180px;display:flex;flex-wrap:wrap;justify-content:center;align-content:center;gap:25px}
-.grupo{width:90px;height:90px;position:relative}
-.palito{position:absolute;width:5px;height:58px;background:#fff;border-radius:5px;top:15px}
-.p1{left:18px}.p2{left:34px}.p3{left:50px}
-.horizontal{position:absolute;width:48px;height:5px;background:#fff;border-radius:5px;left:18px;top:68px}
-.diagonal{position:absolute;width:5px;height:70px;background:#fff;border-radius:5px;left:45px;top:10px;transform:rotate(45deg);transform-origin:center}
-.menu{position:absolute;top:18px;right:18px;width:48px;height:48px;border:none;border-radius:50%;background:#222;color:#fff;font-size:24px;cursor:pointer;z-index:10}
-.menu:hover{background:#333}.menu:active{transform:scale(.95)}
-.ayuda{position:absolute;bottom:18px;font-size:11px;color:#777;text-align:center}
-.modal,.ganador{position:fixed;inset:0;align-items:center;justify-content:center;z-index:100}
-.modal{display:none;background:rgba(0,0,0,.75)}.modal.activo{display:flex}
-.ventana{background:#222;width:85%;max-width:350px;padding:30px;border-radius:15px;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,.5)}
-.ventana h2{margin-bottom:15px}.ventana p{color:#aaa;margin-bottom:25px}
-.boton{border:none;border-radius:8px;padding:12px 20px;font-size:16px;cursor:pointer}.reiniciar{background:#fff;color:#000}.cancelar{background:#444;color:#fff;margin-left:8px}
-.ganador{display:none;background:rgba(0,0,0,.92);flex-direction:column;text-align:center;z-index:200}.ganador.activo{display:flex}.ganador h1{font-size:42px;margin-bottom:30px}.ganador button{padding:14px 25px;border:none;border-radius:8px;font-size:17px;cursor:pointer}
-@media(max-width:600px){.nombre{font-size:16px;margin-bottom:25px}.marcador{gap:8px}.grupo{transform:scale(.85)}.ayuda{font-size:9px}}
-@media(max-height:500px){.nombre{margin-bottom:12px}.marcador{min-height:130px;gap:4px}.grupo{transform:scale(.7)}.ayuda{bottom:8px}}
+*{box-sizing:border-box;margin:0;padding:0}html,body{width:100%;height:100%;background:#111;color:#fff;font-family:Arial,sans-serif;overflow:hidden}body{overscroll-behavior:none}.app{height:100dvh;display:flex;position:relative}.equipo{width:50%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;user-select:none;-webkit-user-select:none;touch-action:manipulation;cursor:pointer}.nosotros{border-right:1px solid #444}.nombre{font-size:20px;font-weight:bold;letter-spacing:3px;margin-bottom:40px}.marcador{width:90%;max-width:400px;min-height:180px;display:flex;flex-wrap:wrap;justify-content:center;align-content:center;gap:25px}.grupo{width:90px;height:90px;position:relative}.palito{position:absolute;width:5px;height:58px;background:#fff;border-radius:5px;top:15px}.p1{left:18px}.p2{left:34px}.p3{left:50px}.horizontal{position:absolute;width:48px;height:5px;background:#fff;border-radius:5px;left:18px;top:68px}.diagonal{position:absolute;width:5px;height:70px;background:#fff;border-radius:5px;left:45px;top:10px;transform:rotate(45deg);transform-origin:center}.menu{position:absolute;top:18px;right:18px;width:48px;height:48px;border:none;border-radius:50%;background:#222;color:#fff;font-size:24px;cursor:pointer;z-index:10}.menu:hover{background:#333}.menu:active{transform:scale(.95)}.ayuda{position:absolute;bottom:18px;font-size:11px;color:#777;text-align:center}.modal,.ganador{position:fixed;inset:0;align-items:center;justify-content:center;z-index:100}.modal{display:none;background:rgba(0,0,0,.75)}.modal.activo{display:flex}.ventana{background:#222;width:85%;max-width:350px;padding:30px;border-radius:15px;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,.5)}.ventana h2{margin-bottom:15px}.ventana p{color:#aaa;margin-bottom:25px}.boton{border:none;border-radius:8px;padding:12px 20px;font-size:16px;cursor:pointer}.reiniciar{background:#fff;color:#000}.cancelar{background:#444;color:#fff;margin-left:8px}.ganador{display:none;background:rgba(0,0,0,.92);flex-direction:column;text-align:center;z-index:200}.ganador.activo{display:flex}.ganador h1{font-size:42px;margin-bottom:30px}.ganador button{padding:14px 25px;border:none;border-radius:8px;font-size:17px;cursor:pointer}@media(max-width:600px){.nombre{font-size:16px;margin-bottom:25px}.marcador{gap:8px}.grupo{transform:scale(.85)}.ayuda{font-size:9px}}@media(max-height:500px){.nombre{margin-bottom:12px}.marcador{min-height:130px;gap:4px}.grupo{transform:scale(.7)}.ayuda{bottom:8px}}
 </style>
 </head>
 <body>
-<div class="app">
-<div class="equipo nosotros" id="nosotros" aria-label="Nosotros"><div class="nombre">NOSOTROS</div><div class="marcador" id="marcadorNosotros"></div><div class="ayuda">Toque +1 · Doble toque +2 · Mantener −1</div></div>
-<div class="equipo ellos" id="ellos" aria-label="Ellos"><div class="nombre">ELLOS</div><div class="marcador" id="marcadorEllos"></div><div class="ayuda">Toque +1 · Doble toque +2 · Mantener −1</div></div>
-<button class="menu" id="btnMenu" aria-label="Menú">⋮</button>
-</div>
-<div class="modal" id="modal"><div class="ventana"><h2>Reiniciar partida</h2><p>¿Querés borrar el marcador actual?</p><button class="boton reiniciar" id="btnReiniciar">Reiniciar</button><button class="boton cancelar" id="btnCancelar">Cancelar</button></div></div>
-<div class="ganador" id="ganador"><h1 id="textoGanador">¡Ganaron!</h1><button id="btnNuevaPartida">Nueva partida</button></div>
+<div class="app"><div class="equipo nosotros" id="nosotros" aria-label="Nosotros"><div class="nombre">NOSOTROS</div><div class="marcador" id="marcadorNosotros"></div><div class="ayuda">Toque +1 · Doble toque +2 · Mantener −1</div></div><div class="equipo ellos" id="ellos" aria-label="Ellos"><div class="nombre">ELLOS</div><div class="marcador" id="marcadorEllos"></div><div class="ayuda">Toque +1 · Doble toque +2 · Mantener −1</div></div><button class="menu" id="btnMenu" aria-label="Menú">⋮</button></div>
+<div class="modal" id="modal"><div class="ventana"><h2>Reiniciar partida</h2><p>¿Querés borrar el marcador actual?</p><button class="boton reiniciar" id="btnReiniciar">Reiniciar</button><button class="boton cancelar" id="btnCancelar">Cancelar</button></div></div><div class="ganador" id="ganador"><h1 id="textoGanador">¡Ganaron!</h1><button id="btnNuevaPartida">Nueva partida</button></div>
 <script>
-'use strict';
-let puntos={nosotros:0,ellos:0};
-const estado={nosotros:{ultimoClick:0,timer:null,pressTimer:null,pressed:false},ellos:{ultimoClick:0,timer:null,pressTimer:null,pressed:false}};
-const $=id=>document.getElementById(id);
-function sumar(equipo,cantidad){puntos[equipo]=Math.min(30,puntos[equipo]+cantidad);actualizar();comprobarGanador()}
-function restar(equipo){puntos[equipo]=Math.max(0,puntos[equipo]-1);actualizar()}
-function crearGrupo(cantidad){const grupo=document.createElement('div');grupo.className='grupo';if(cantidad>=1)grupo.append(Object.assign(document.createElement('div'),{className:'palito p1'}));if(cantidad>=2)grupo.append(Object.assign(document.createElement('div'),{className:'palito p2'}));if(cantidad>=3)grupo.append(Object.assign(document.createElement('div'),{className:'palito p3'}));if(cantidad>=4)grupo.append(Object.assign(document.createElement('div'),{className:'horizontal'}));if(cantidad===5)grupo.append(Object.assign(document.createElement('div'),{className:'diagonal'}));return grupo}
-function dibujarMarcador(el,puntosEquipo){el.innerHTML='';for(let i=0;i<Math.floor(puntosEquipo/5);i++)el.appendChild(crearGrupo(5));const resto=puntosEquipo%5;if(resto)el.appendChild(crearGrupo(resto))}
-function actualizar(){dibujarMarcador($('marcadorNosotros'),puntos.nosotros);dibujarMarcador($('marcadorEllos'),puntos.ellos)}
-function comprobarGanador(){if(puntos.nosotros===30)mostrarGanador('¡GANÓ NOSOTROS!');else if(puntos.ellos===30)mostrarGanador('¡GANÓ ELLOS!')}
-function mostrarGanador(texto){$('textoGanador').textContent=texto;$('ganador').classList.add('activo')}
-function nuevaPartida(){puntos.nosotros=0;puntos.ellos=0;$('ganador').classList.remove('activo');actualizar()}
-function abrirMenu(e){e.stopPropagation();$('modal').classList.add('activo')}
-function cerrarMenu(){$('modal').classList.remove('activo')}
-function iniciarPresion(equipo){const s=estado[equipo];s.pressed=true;s.pressTimer=setTimeout(()=>{if(s.pressed){s.pressed=false;clearTimeout(s.timer);s.ultimoClick=0;restar(equipo)}},600)}
-function terminarPresion(equipo){const s=estado[equipo];s.pressed=false;clearTimeout(s.pressTimer)}
-function clickEquipo(equipo){const s=estado[equipo];if(s.pressed)return;const ahora=Date.now();if(ahora-s.ultimoClick<350){clearTimeout(s.timer);sumar(equipo,2);s.ultimoClick=0}else{s.ultimoClick=ahora;s.timer=setTimeout(()=>{if(!s.pressed)sumar(equipo,1);s.ultimoClick=0},350)}}
-for(const equipo of ['nosotros','ellos']){const el=$(equipo);el.addEventListener('click',()=>clickEquipo(equipo));el.addEventListener('contextmenu',e=>e.preventDefault());el.addEventListener('mousedown',()=>iniciarPresion(equipo));el.addEventListener('mouseup',()=>terminarPresion(equipo));el.addEventListener('mouseleave',()=>terminarPresion(equipo));el.addEventListener('touchstart',()=>iniciarPresion(equipo),{passive:true});el.addEventListener('touchend',()=>terminarPresion(equipo),{passive:true});el.addEventListener('touchcancel',()=>terminarPresion(equipo),{passive:true})}
-$('btnMenu').addEventListener('click',abrirMenu);$('btnReiniciar').addEventListener('click',nuevaPartida);$('btnCancelar').addEventListener('click',cerrarMenu);$('btnNuevaPartida').addEventListener('click',nuevaPartida);$('modal').addEventListener('click',e=>{if(e.target===$('modal'))cerrarMenu()});
-actualizar();
+'use strict';let puntos={nosotros:0,ellos:0};const estado={nosotros:{ultimoClick:0,timer:null,pressTimer:null,pressed:false},ellos:{ultimoClick:0,timer:null,pressTimer:null,pressed:false}};const $=id=>document.getElementById(id);function sumar(e,c){puntos[e]=Math.min(30,puntos[e]+c);actualizar();comprobarGanador()}function restar(e){puntos[e]=Math.max(0,puntos[e]-1);actualizar()}function crearGrupo(c){const g=document.createElement('div');g.className='grupo';if(c>=1)g.append(Object.assign(document.createElement('div'),{className:'palito p1'}));if(c>=2)g.append(Object.assign(document.createElement('div'),{className:'palito p2'}));if(c>=3)g.append(Object.assign(document.createElement('div'),{className:'palito p3'}));if(c>=4)g.append(Object.assign(document.createElement('div'),{className:'horizontal'}));if(c===5)g.append(Object.assign(document.createElement('div'),{className:'diagonal'}));return g}function dibujarMarcador(el,p){el.innerHTML='';for(let i=0;i<Math.floor(p/5);i++)el.appendChild(crearGrupo(5));const r=p%5;if(r)el.appendChild(crearGrupo(r))}function actualizar(){dibujarMarcador($('marcadorNosotros'),puntos.nosotros);dibujarMarcador($('marcadorEllos'),puntos.ellos)}function comprobarGanador(){if(puntos.nosotros===30)mostrarGanador('¡GANÓ NOSOTROS!');else if(puntos.ellos===30)mostrarGanador('¡GANÓ ELLOS!')}function mostrarGanador(t){$('textoGanador').textContent=t;$('ganador').classList.add('activo')}function nuevaPartida(){puntos={nosotros:0,ellos:0};$('ganador').classList.remove('activo');actualizar()}function abrirMenu(e){e.stopPropagation();$('modal').classList.add('activo')}function cerrarMenu(){$('modal').classList.remove('activo')}function iniciarPresion(e){const s=estado[e];s.pressed=true;s.pressTimer=setTimeout(()=>{if(s.pressed){s.pressed=false;clearTimeout(s.timer);s.ultimoClick=0;restar(e)}},600)}function terminarPresion(e){const s=estado[e];s.pressed=false;clearTimeout(s.pressTimer)}function clickEquipo(e){const s=estado[e];if(s.pressed)return;const a=Date.now();if(a-s.ultimoClick<350){clearTimeout(s.timer);sumar(e,2);s.ultimoClick=0}else{s.ultimoClick=a;s.timer=setTimeout(()=>{if(!s.pressed)sumar(e,1);s.ultimoClick=0},350)}}for(const e of ['nosotros','ellos']){const el=$(e);el.addEventListener('click',()=>clickEquipo(e));el.addEventListener('contextmenu',x=>x.preventDefault());el.addEventListener('mousedown',()=>iniciarPresion(e));el.addEventListener('mouseup',()=>terminarPresion(e));el.addEventListener('mouseleave',()=>terminarPresion(e));el.addEventListener('touchstart',()=>iniciarPresion(e),{passive:true});el.addEventListener('touchend',()=>terminarPresion(e),{passive:true});el.addEventListener('touchcancel',()=>terminarPresion(e),{passive:true})}$('btnMenu').addEventListener('click',abrirMenu);$('btnReiniciar').addEventListener('click',nuevaPartida);$('btnCancelar').addEventListener('click',cerrarMenu);$('btnNuevaPartida').addEventListener('click',nuevaPartida);$('modal').addEventListener('click',e=>{if(e.target===$('modal'))cerrarMenu()});if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.error))}actualizar();
 </script>
-</body>
-</html>
+</body></html>
