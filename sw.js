@@ -1,10 +1,19 @@
-const CACHE_NAME = 'contador-truco-v1';
+const CACHE_NAME = 'contador-truco-v2';
+const FIREPLACE_IMAGE = 'https://images.unsplash.com/photo-1635194980245-66768dfc0e4d?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=2400';
 const APP_SHELL = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(APP_SHELL))
+      .then(async cache => {
+        await cache.addAll(APP_SHELL);
+        try {
+          const response = await fetch(FIREPLACE_IMAGE, {mode: 'no-cors'});
+          await cache.put(FIREPLACE_IMAGE, response);
+        } catch (error) {
+          console.warn('No se pudo precargar el fondo:', error);
+        }
+      })
       .then(() => self.skipWaiting())
   );
 });
